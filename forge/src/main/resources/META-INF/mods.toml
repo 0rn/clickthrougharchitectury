@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[45,)"
+#issueTrackerURL = ""
+license = "MIT"
+
+[[mods]]
+modId = "clickthrougharchitectury"
+version = "${version}"
+displayName = "Click Through Architectury"
+authors = "0rn"
+description = '''
+Click through signs and item frames
+'''
+#logoFile = ""
+
+[[dependencies.clickthrougharchitectury]]
+modId = "forge"
+mandatory = true
+versionRange = "[46,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.clickthrougharchitectury]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.clickthrougharchitectury]]
+modId = "architectury"
+mandatory = true
+versionRange = "[9.0.7,)"
+ordering = "AFTER"
+side = "BOTH"
