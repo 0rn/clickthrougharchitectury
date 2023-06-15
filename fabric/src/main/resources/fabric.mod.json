@@ -8,12 +8,11 @@
     "0rn"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "sources": "https://github.com/0rn/clickthrougharchitectury"
   },
-  "license": "MIT",
-  "icon": "assets/examplemod/icon.png",
-  "environment": "*",
+  "license": "unlicense",
+  "icon": "",
+  "environment": "client",
   "entrypoints": {
     "main": [
       "net.clickthrougharchitectury.fabric.ClickThroughArchitecturyFabric"

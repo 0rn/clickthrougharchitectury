@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 */
 
 public class ClickThroughArchitectury {
-    public static final String MOD_ID = "examplemod";
+    public static final String MOD_ID = "clickthrougharchitectury";
     
     public static void init() {
         //System.out.println(ExampleExpectPlatform.getConfigDirectory().toAbsolutePath().normalize().toString());

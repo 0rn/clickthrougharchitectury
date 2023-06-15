@@ -15,7 +15,7 @@ loom {
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
 
         mixinConfig "clickthrougharchitectury-common.mixins.json"
-        //mixinConfig "clickthrougharchitectury.mixins.json"
+        mixinConfig "clickthrougharchitectury.mixins.json"
     }
 }
 
