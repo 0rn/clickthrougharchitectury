@@ -11,18 +11,24 @@
     "sources": "https://github.com/0rn/clickthrougharchitectury"
   },
   "license": "unlicense",
-  "icon": "",
+  "icon": "icon.png",
   "environment": "client",
   "entrypoints": {
     "main": [
       "net.clickthrougharchitectury.fabric.ClickThroughArchitecturyFabric"
+    ],
+    "modmenu": [
+      "net.clickthrougharchitectury.fabric.Menu"
     ]
   },
   "mixins": [
     "clickthrougharchitectury-common.mixins.json"
   ],
   "depends": {
-    "fabric": "*",
     "minecraft": ">=1.20"
+  },
+  "suggests": {
+    "cloth-config": "11.x",
+    "modmenu": "7.1.0"
   }
 }

@@ -31,6 +31,8 @@ allprojects {
     group = rootProject.maven_group
 
     repositories {
+        maven { url "https://maven.terraformersmc.com/releases" }
+        maven { url "https://maven.shedaniel.me/" }
         // Add repositories to retrieve artifacts from in here.
         // You should only use this when depending on other mods because
         // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.

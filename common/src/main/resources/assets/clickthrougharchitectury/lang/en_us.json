@@ -1,3 +1,9 @@
 {
-  "item.examplemod.example_item": "Example Item"
+  "key.clickthrougharchitectury.title": "Click Through Architectury",
+  "config.clickthrougharchitectury.category": "Click Through Architectury",
+  "config.clickthrougharchitectury.sign_enabled": "Click through signs",
+  "config.clickthrougharchitectury.item_frame_enabled": "Click through item frames",
+  "config.clickthrougharchitectury.banner_enabled": "Click through banners",
+  "config.clickthrougharchitectury.only_containers": "Only click through to containers",
+  "config.clickthrougharchitectury.to_sign": "Click through to signs"
 }

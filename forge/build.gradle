@@ -27,7 +27,13 @@ configurations {
 }
 
 dependencies {
+    // required dependencies
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
+    // optional dependencies
+    modCompileOnly("me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}")
+    // for debugging purposes - select which mods are actually loaded
+    modRuntimeOnly("me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}")
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }

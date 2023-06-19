@@ -11,7 +11,7 @@ authors = "0rn"
 description = '''
 Click through signs and item frames
 '''
-#logoFile = ""
+logoFile = "icon.png"
 
 [[dependencies.clickthrougharchitectury]]
 modId = "forge"
@@ -27,9 +27,9 @@ versionRange = "[1.20,)"
 ordering = "NONE"
 side = "CLIENT"
 
-#[[dependencies.clickthrougharchitectury]]
-#modId = "architectury"
-#mandatory = true
-#versionRange = "[9.0.7,)"
-#ordering = "AFTER"
-#side = "CLIENT"
+[[dependencies.clickthrougharchitectury]]
+modId = "cloth_config"
+mandatory = false
+versionRange = "[9,)"
+ordering = "AFTER"
+side = "CLIENT"

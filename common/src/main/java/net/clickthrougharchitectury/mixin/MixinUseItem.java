@@ -1,5 +1,6 @@
 package net.clickthrougharchitectury.mixin;
 
+import net.clickthrougharchitectury.ClickThroughArchitectury;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
@@ -12,7 +13,10 @@ import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.WallBannerBlock;
 import net.minecraft.world.level.block.WallSignBlock;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -58,16 +62,25 @@ public abstract class MixinUseItem {
             //System.out.println(hitResult.getType());
             switch (hitResult.getType()) {
                 case ENTITY -> { // item frames
-                    if (crosshairPickEntity instanceof ItemFrame && !player.isCrouching()) {
+                    if (
+                            ClickThroughArchitectury.item_frame_enabled &&
+                            crosshairPickEntity instanceof ItemFrame &&
+                            !player.isCrouching()
+                    ) {
                         //System.out.println("Item Frame");
                         this.hitResult = useThroughItemFrame((ItemFrame) crosshairPickEntity, hitResult);
                     }
                 }
-                case BLOCK -> { // signs
+                case BLOCK -> { // signs & banners
                     BlockPos blockPos = ((BlockHitResult) hitResult).getBlockPos();
                     BlockState state = level.getBlockState(blockPos);
                     Block block = state.getBlock();
-                    if (block instanceof WallSignBlock) {
+                    System.out.println(block);
+
+                    if (
+                            ClickThroughArchitectury.sign_enabled &&
+                            block instanceof WallSignBlock
+                    ) {
                         //System.out.println("Sign");
                         Item heldItem = player.getMainHandItem().getItem();
 
@@ -81,26 +94,54 @@ public abstract class MixinUseItem {
                             );
                         }
                     }
+                    if (
+                            ClickThroughArchitectury.banner_enabled &&
+                            block instanceof WallBannerBlock
+                    ) {
+                        System.out.println("Banner");
+                        this.hitResult = useThroughBanner(blockPos, state, hitResult);
+                    }
                 }
             }
         }
     }
 
+    private boolean attached_valid(BlockPos pos) {
+        Block block = level.getBlockState(pos).getBlock();
+        BlockEntity entity = level.getBlockEntity(pos);
+
+        return (!ClickThroughArchitectury.only_containers || entity instanceof BaseContainerBlockEntity) &&
+                (ClickThroughArchitectury.to_sign || !(block instanceof WallSignBlock));
+    }
+
     private HitResult useThroughItemFrame(ItemFrame frame, HitResult hitResult) {
         BlockPos attachedPos = frame.getPos().offset(frame.getDirection().getOpposite().getNormal());
-        if (true && level.getBlockState(attachedPos).getBlock() instanceof WallSignBlock) { // TODO: add config for this
+
+        if (attached_valid(attachedPos)) {
+            return new BlockHitResult(hitResult.getLocation(), frame.getDirection(), attachedPos, false);
+        } else {
             return null;
         }
-        return new BlockHitResult(hitResult.getLocation(), frame.getDirection(), attachedPos, false);
     }
 
     private HitResult useThroughSign(BlockPos blockPos, BlockState state, HitResult hitResult) {
         Direction dir = (Direction) state.getValues().get(WallSignBlock.FACING);
         BlockPos attachedPos = blockPos.offset(dir.getOpposite().getNormal());
-        if (true && level.getBlockState(attachedPos).getBlock() instanceof WallSignBlock) { // TODO: add config for this
+        if (attached_valid(attachedPos)) {
+            return new BlockHitResult(hitResult.getLocation(), dir, attachedPos, false);
+        } else {
             return null;
         }
-        return new BlockHitResult(hitResult.getLocation(), dir, attachedPos, false);
+    }
+
+    private HitResult useThroughBanner(BlockPos blockPos, BlockState state, HitResult hitResult) {
+        Direction dir = (Direction) state.getValues().get(WallBannerBlock.FACING);
+        BlockPos attachedPos = blockPos.offset(dir.getOpposite().getNormal());
+        if (attached_valid(attachedPos)) {
+            return new BlockHitResult(hitResult.getLocation(), dir, attachedPos, false);
+        } else {
+            return null;
+        }
     }
 
     @Inject(method = "startUseItem", at = @At("RETURN"))
